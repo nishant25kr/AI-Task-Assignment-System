@@ -5,7 +5,6 @@ export const createTicket = async (req, res) => {
   try {
     const { title, description } = req.body;
 
-    console.log(title,description)
     if (!title || !description) {
       return res
         .status(400)
@@ -17,7 +16,7 @@ export const createTicket = async (req, res) => {
       createdBy: req.user._id.toString(),
     });
 
-    await inngest.send({
+    const inn = await inngest.send({
       name: "ticket/created",
       data: {
         ticketId: (await newTicket)._id.toString(),
@@ -26,10 +25,15 @@ export const createTicket = async (req, res) => {
         createdBy: req.user._id.toString(),
       },
     });
+    
+    console.log("response",inn)
+
+
     return res.status(201).json({
       message: "Ticket created and processing started",
       ticket: newTicket,
     });
+    
   } catch (error) {
     console.error("Error creating ticket", error.message);
     return res.status(500).json({ message: "Internal Server Error" });

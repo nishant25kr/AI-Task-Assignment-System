@@ -11,6 +11,7 @@ export const onUserSignup = inngest.createFunction(
 
     try {
       const { email } = event.data;
+      console.log(email)
 
       // Step 1: Get the user from DB
       const userObject = await step.run("get-user-email", async () => {
@@ -23,10 +24,9 @@ export const onUserSignup = inngest.createFunction(
 
       // Step 2: Send welcome email
       await step.run("send-welcome-email", async () => {
-        const subject = `Welcome to the app`;
+        const subject = `Welcome to the app`
         const message = `Hi ${userObject.email},
-        
-Thanks for signing up. We're glad to have you onboard!`;
+        Thanks for signing up. We're glad to have you onboard!`;
 
         await sendMail(userObject.email, subject, message);
       });

@@ -1,6 +1,7 @@
 import { createAgent, gemini } from "@inngest/agent-kit"
 
 const analyzeticket = async (ticket) => {
+  console.log('inside analyse')
     const supportAgent = createAgent({
         model: gemini({
             model: "gemini-1.5-flash-8b",
@@ -54,6 +55,7 @@ const raw = response.output[0].context
 try {
     const match = raw.match(/```json\s*([\s\S]*?)\s*```/i);
     const jsonString = match ? match[1] : raw.trim();
+    console.log("jsonstring:", jsonString)
     return JSON.parse(jsonString);
   } catch (e) {
     console.log("Failed to parse JSON from AI response" + e.message);
