@@ -6,7 +6,7 @@ const router = express.Router()
 
 
 router.post('/update-user',authentication,update)
-router.post('/users',authentication,getUser)
+router.get('/user',authentication,getUser)
 
 
 router.post("/signup",signup)

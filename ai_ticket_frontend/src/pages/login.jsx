@@ -1,39 +1,39 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function Login() {
-  const [form, setForm] = useState({ email: "", password: "" });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
+
     try {
-      const res = await fetch(`http://localhost:3000/api/auth/login`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(form),
-      });
+      const res = await axios.post(
+        "http://localhost:3000/api/auth/login",
+        { email, password },
+        { withCredentials: true }
+      );
 
-      const data = await res.json();
+      // ✅ Always check structure safely
+      if (res.data?.user) {
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("user", JSON.stringify(res.data.user));
 
-      if (res.ok) {
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("user", JSON.stringify(data.user));
-        navigate("/");
+        // Redirect user to admin dashboard
+        navigate("/admin");
+        window.location.reload();
+
       } else {
-        alert(data.message || "Login failed");
+        alert(res.data?.message || "Invalid credentials");
       }
     } catch (err) {
-      alert("Something went wrong");
-      console.error(err);
+      console.error("Login failed:", err);
+      alert("Something went wrong while logging in");
     } finally {
       setLoading(false);
     }
@@ -50,8 +50,8 @@ export default function Login() {
             name="email"
             placeholder="Email"
             className="input input-bordered"
-            value={form.email}
-            onChange={handleChange}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
 
@@ -60,8 +60,8 @@ export default function Login() {
             name="password"
             placeholder="Password"
             className="input input-bordered"
-            value={form.password}
-            onChange={handleChange}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             required
           />
 

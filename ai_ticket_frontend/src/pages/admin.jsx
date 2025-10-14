@@ -1,7 +1,9 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
+import Sidebar from "../components/Sidebar";
+import Dashboard from "../components/Dashboard";
 
 export default function Admin() {
-  const [users, setUsers] = useState([]);
   const [filteredUsers, setFilteredUsers] = useState([]);
   const [editingUser, setEditingUser] = useState(null);
   const [formData, setFormData] = useState({ role: "", skills: "" });
@@ -9,28 +11,46 @@ export default function Admin() {
 
   const token = localStorage.getItem("token");
 
+  const [user, setUser] = useState(null);
+
   useEffect(() => {
-    fetchUsers();
+    const loadUser = () => {
+      const data = localStorage.getItem("user");
+      if (data) {
+        setUser(JSON.parse(data));
+      } else {
+        setUser(null);
+      }
+    };
+
+    loadUser(); // run on mount
+    window.addEventListener("storage", loadUser); // listen for changes
+
+    return () => window.removeEventListener("storage", loadUser);
   }, []);
 
-  const fetchUsers = async () => {
-    try {
-      const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/auth/users`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const data = await res.json();
-      if (res.ok) {
-        setUsers(data);
-        setFilteredUsers(data);
-      } else {
-        console.error(data.error);
-      }
-    } catch (err) {
-      console.error("Error fetching users", err);
-    }
-  };
+  // const fetchUsers = async () => {
+  //   console.log(token)
+  //   try {
+
+  //     const res = await axios.get(`${import.meta.env.VITE_SERVER_URL}/auth/user`,
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${token}`,
+  //         }
+  //       }
+  //     )
+
+  //     if (res.ok) {
+  //       setUsers(data);
+  //       setFilteredUsers(data);
+  //     } else {
+  //       console.error(data.error);
+  //     }
+  //   } catch (err) {
+  //     console.error("Error fetching users", err);
+  //   }
+  // };
 
   const handleEditClick = (user) => {
     setEditingUser(user.email);
@@ -84,82 +104,105 @@ export default function Admin() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto mt-10">
-      <h1 className="text-2xl font-bold mb-6">Admin Panel - Manage Users</h1>
-      <input
-        type="text"
-        className="input input-bordered w-full mb-6"
-        placeholder="Search by email"
-        value={searchQuery}
-        onChange={handleSearch}
-      />
-      {filteredUsers.map((user) => (
-        <div
-          key={user._id}
-          className="bg-base-100 shadow rounded p-4 mb-4 border"
-        >
-          <p>
-            <strong>Email:</strong> {user.email}
-          </p>
-          <p>
-            <strong>Current Role:</strong> {user.role}
-          </p>
-          <p>
-            <strong>Skills:</strong>{" "}
-            {user.skills && user.skills.length > 0
-              ? user.skills.join(", ")
-              : "N/A"}
-          </p>
+    // <div className="max-w-4xl mx-auto mt-10">
+    //   <h1 className="text-2xl font-bold mb-6">Admin Panel - Manage Users</h1>
+    //   <input
+    //     type="text"
+    //     className="input input-bordered w-full mb-6"
+    //     placeholder="Search by email"
+    //     value={searchQuery}
+    //     onChange={handleSearch}
+    //   />
+    //   {filteredUsers.map((user) => (
+    //     <div
+    //       key={user._id}
+    //       className="bg-base-100 shadow rounded p-4 mb-4 border"
+    //     >
+    //       <p>
+    //         <strong>Email:</strong> {user.email}
+    //       </p>
+    //       <p>
+    //         <strong>Current Role:</strong> {user.role}
+    //       </p>
+    //       <p>
+    //         <strong>Skills:</strong>{" "}
+    //         {user.skills && user.skills.length > 0
+    //           ? user.skills.join(", ")
+    //           : "N/A"}
+    //       </p>
 
-          {editingUser === user.email ? (
-            <div className="mt-4 space-y-2">
-              <select
-                className="select select-bordered w-full"
-                value={formData.role}
-                onChange={(e) =>
-                  setFormData({ ...formData, role: e.target.value })
-                }
-              >
-                <option value="user">User</option>
-                <option value="moderator">Moderator</option>
-                <option value="admin">Admin</option>
-              </select>
+    //       {editingUser === user.email ? (
+    //         <div className="mt-4 space-y-2">
+    //           <select
+    //             className="select select-bordered w-full"
+    //             value={formData.role}
+    //             onChange={(e) =>
+    //               setFormData({ ...formData, role: e.target.value })
+    //             }
+    //           >
+    //             <option value="user">User</option>
+    //             <option value="moderator">Moderator</option>
+    //             <option value="admin">Admin</option>
+    //           </select>
 
-              <input
-                type="text"
-                placeholder="Comma-separated skills"
-                className="input input-bordered w-full"
-                value={formData.skills}
-                onChange={(e) =>
-                  setFormData({ ...formData, skills: e.target.value })
-                }
-              />
+    //           <input
+    //             type="text"
+    //             placeholder="Comma-separated skills"
+    //             className="input input-bordered w-full"
+    //             value={formData.skills}
+    //             onChange={(e) =>
+    //               setFormData({ ...formData, skills: e.target.value })
+    //             }
+    //           />
 
-              <div className="flex gap-2">
-                <button
-                  className="btn btn-success btn-sm"
-                  onClick={handleUpdate}
-                >
-                  Save
-                </button>
-                <button
-                  className="btn btn-ghost btn-sm"
-                  onClick={() => setEditingUser(null)}
-                >
-                  Cancel
-                </button>
-              </div>
+    //           <div className="flex gap-2">
+    //             <button
+    //               className="btn btn-success btn-sm"
+    //               onClick={handleUpdate}
+    //             >
+    //               Save
+    //             </button>
+    //             <button
+    //               className="btn btn-ghost btn-sm"
+    //               onClick={() => setEditingUser(null)}
+    //             >
+    //               Cancel
+    //             </button>
+    //           </div>
+    //         </div>
+    //       ) : (
+    //         <button
+    //           className="btn btn-primary btn-sm mt-2"
+    //           onClick={() => handleEditClick(user)}
+    //         >
+    //           Edit
+    //         </button>
+    //       )}
+    //     </div>
+    //   ))}
+    // </div>
+
+    <>
+      <div className="flex min-h-screen">
+        {/* Sidebar */}
+        <Sidebar />
+
+        {/* Main Content */}
+        <div className="flex-1 ">
+          {/* <Navbar /> */}
+          <div className="p-6">
+            <div className="p-6">
+              <h1 className="text-2xl font-semibold mb-4">
+                Welcome, {user?.name || "Admin"}
+              </h1>
+              <p className="text-gray-600">
+                Manage users, create tasks, and monitor activities here.
+              </p>
             </div>
-          ) : (
-            <button
-              className="btn btn-primary btn-sm mt-2"
-              onClick={() => handleEditClick(user)}
-            >
-              Edit
-            </button>
-          )}
+            <Dashboard />
+          </div>
         </div>
-      ))}
-    </div>
+      </div>
+    </>
   );
 }

@@ -3,26 +3,29 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "dev": "nodemon index.js",
-    "inngest:dev": "./node_modules/.bin/inngest dev"
+    "inngest:dev": "npx inngest dev"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "module",
-  "devDependencies": {
-    "inngest": "^3.41.0",
-    "nodemon": "^3.1.10"
-  },
   "dependencies": {
     "@inngest/agent-kit": "^0.9.0",
     "bcrypt": "^6.0.0",
     "cors": "^2.8.5",
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
+    "inngest": "^3.41.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.17.2",
     "nodemailer": "^7.0.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  },
+  "inngest": {
+    "servePath": "./serve.js"
   }
 }

@@ -8,48 +8,53 @@ import Login from './pages/login'
 import Signup from './pages/signup'
 import Admin from './pages/admin'
 import Tickets from './pages/tickets'
+import Home from './pages/Home'
+import Navbar from './components/Navbar/Navbar'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
+      <Navbar />
       <Routes>
 
         <Route
           path="/"
           element={
-            <CheckAuth protected={true}>
-              <Tickets />
+            <CheckAuth protectedRoute={true}>
+              <Home />
             </CheckAuth>
           } />
         <Route
           path="/tickets/:id"
           element={
-            <CheckAuth protected={true}>
+            <CheckAuth protectedRoute={true}>
               <Ticket />
             </CheckAuth>
           } />
         <Route
           path="/login"
           element={
-            <CheckAuth protected={false}>
+            <CheckAuth protectedRoute={false}>
               <Login />
             </CheckAuth>
           } />
 
-          <Route
+        <Route
           path="/signup"
           element={
-            <CheckAuth protected={false}>
+            <CheckAuth protectedRoute={false}>
               <Signup />
             </CheckAuth>
           } />
-          <Route
+        <Route
           path="/admin"
           element={
-            <CheckAuth protected={true}>
+            <CheckAuth protectedRoute={true}>
               <Admin />
             </CheckAuth>
-          } />
+          } >
+
+        </Route>
 
       </Routes>
     </BrowserRouter>

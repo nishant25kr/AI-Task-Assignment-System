@@ -15,10 +15,8 @@ const signup = async (req, res) => {
       email,
       password: hashedPassword,
       skills,
+      role: "admin"
     });
-
-    
-
 
     // fire Inngest event
     const ingg = await inngest.send({
@@ -47,41 +45,49 @@ const signup = async (req, res) => {
   }
 };
 
-
-
-
 const login = async (req, res) => {
-    const { email, password } = req.body;
+  const { email, password } = req.body;
+  console.log("📩 Incoming login request:", email, password);
 
-    try {
-        const user = await User.findOne({ email });
-        if (!user) {
-            return res.status(400).json({ error: 'Invalid email or password' });
-        }
-
-        // compare password
-        const isMatch = await bcrypt.compare(password, user.password);
-        if (!isMatch) {
-            return res.status(400).json({ error: 'Invalid email or password' });
-        }
-
-        // sign JWT
-        const token = jwt.sign(
-            {
-                _id: user._id,
-                role: user.role,
-            },
-            process.env.JWT_SECRET,
-            { expiresIn: '7d' }
-        );
-
-        res.json({ user, token });
-    } catch (error) {
-        res.status(500).json({
-            error: 'login failed',
-            details: error.message,
-        });
+  try {
+    // check user
+    const user = await User.findOne({ email });
+    if (!user) {
+      console.log("❌ User not found");
+      return res.status(400).json({ error: 'Invalid email or password' });
     }
+
+    // check password
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      console.log("❌ Password mismatch");
+      return res.status(400).json({ error: 'Invalid email or password' });
+    }
+
+    // sign JWT
+    if (!process.env.JWT_SECRET) {
+      console.log("⚠️ Missing JWT_SECRET in environment variables!");
+      return res.status(500).json({ error: 'Server config error: Missing JWT_SECRET' });
+    }
+
+    const token = jwt.sign(
+      {
+        _id: user._id,
+        role: user.role,
+      },
+      process.env.JWT_SECRET,
+      { expiresIn: '7d' }
+    );
+
+    console.log("✅ Login successful");
+    return res.json({ user, token });
+  } catch (error) {
+    console.error("🔥 Login failed:", error);
+    return res.status(500).json({
+      error: 'Login failed',
+      details: error.message,
+    });
+  }
 };
 
 const logout = async (req, res) => {
@@ -137,6 +143,7 @@ const update = async (req, res) => {
 }
 
 const getUser = async (req, res) => {
+  console.log(req.user)
     try {
         if (req.user.role !== "admin") {
             return res.status(403).json({ error: "Forbidden" })
@@ -145,7 +152,7 @@ const getUser = async (req, res) => {
 
         return res.json(user)
     } catch (error) {
-
+      console.log(error)
     }
 }
 
