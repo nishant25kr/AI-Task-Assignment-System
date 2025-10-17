@@ -1,34 +1,71 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import './index.css'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import CheckAuth from './components/check-auth'
+import Ticket from './pages/ticket'
+import Login from './pages/login'
+import Signup from './pages/signup'
+import Admin from './pages/admin'
+import Tickets from './pages/tickets'
+import Home from './pages/Home'
+import Navbar from './components/Navbar/Navbar'
+import Dashboard from './components/Dashboard'
+import AllTickets from './pages/AllTickets'
+import Employees from './components/Employees'
+
 
 function App() {
-  const [count, setCount] = useState(0)
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <BrowserRouter>
+      <Navbar />
+      <main >
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <CheckAuth protectedRoute={true}>
+                <Home />
+              </CheckAuth>
+            } />
+          <Route
+            path="/tickets/:id"
+            element={
+              <CheckAuth protectedRoute={true}>
+                <Ticket />
+              </CheckAuth>
+            } />
+          <Route
+            path="/login"
+            element={
+              <CheckAuth protectedRoute={false}>
+                <Login />
+              </CheckAuth>
+            } />
+
+          <Route
+            path="/signup"
+            element={
+              <CheckAuth protectedRoute={false}>
+                <Signup />
+              </CheckAuth>
+            } />
+          <Route
+            path="/admin"
+            element={
+              <CheckAuth protectedRoute={true}>
+                <Admin />
+              </CheckAuth>
+            } >
+            <Route path='dashboard' element={<Dashboard />} />
+            <Route path='tickets' element={<AllTickets />} />
+            <Route path='employees' element={<Employees />} />
+
+          </Route>
+
+        </Routes>
+      </main>
+    </BrowserRouter>
   )
 }
 

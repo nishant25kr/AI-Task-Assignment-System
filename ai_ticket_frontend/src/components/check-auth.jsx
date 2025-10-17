@@ -10,7 +10,7 @@ export default function CheckAuth({ children, protectedRoute }) {
     const token = localStorage.getItem("token")
     if (protectedRoute) {
       if (!token) {
-        navigate('/login')
+        navigate('/')
       } else {
         setLoading(false)
       }
@@ -29,7 +29,7 @@ export default function CheckAuth({ children, protectedRoute }) {
   }
 
   return (
-    <div className='w-full  h-screen'>
+    <div className='w-full'>
       {children}
     </div>
   )

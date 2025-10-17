@@ -5,37 +5,44 @@ export const createTicket = async (req, res) => {
   try {
     const { title, description } = req.body;
 
+    // Validate request
     if (!title || !description) {
-      return res
-        .status(400)
-        .json({ message: "Title and description are required" });
+      return res.status(400).json({
+        message: "Title and description are required",
+      });
     }
-    const newTicket = Ticket.create({
+
+    // Ensure user is authenticated
+    if (!req.user || !req.user._id) {
+      return res.status(401).json({ message: "Unauthorized: User not found" });
+    }
+
+    // Create ticket in DB
+    const newTicket = await Ticket.create({
       title,
       description,
       createdBy: req.user._id.toString(),
     });
 
-    const inn = await inngest.send({
+    // Send event to Inngest
+    await inngest.send({
       name: "ticket/created",
       data: {
-        ticketId: (await newTicket)._id.toString(),
+        ticketId: newTicket._id.toString(),
         title,
         description,
         createdBy: req.user._id.toString(),
       },
     });
-    
-    console.log("response",inn)
 
-
+    // Respond
     return res.status(201).json({
-      message: "Ticket created and processing started",
+      message: "Ticket created successfully and event sent",
       ticket: newTicket,
     });
-    
+
   } catch (error) {
-    console.error("Error creating ticket", error.message);
+    console.error("Error creating ticket:", error.message);
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
@@ -44,18 +51,22 @@ export const getTickets = async (req, res) => {
   try {
     const user = req.user;
     let tickets = [];
+
     if (user.role !== "user") {
-      tickets = Ticket.find({})
+      tickets = await Ticket.find({})
         .populate("assignedTo", ["email", "_id"])
-        .sort({ createdAt: -1 });
+        .sort({ createdAt: -1 })
+        .lean(); // ✅ makes it plain JSON-safe
     } else {
       tickets = await Ticket.find({ createdBy: user._id })
         .select("title description status createdAt")
-        .sort({ createdAt: -1 });
+        .sort({ createdAt: -1 })
+        .lean(); // ✅ optional but recommended
     }
+
     return res.status(200).json(tickets);
   } catch (error) {
-    console.error("Error fetching tickets", error.message);
+    console.error("Error fetching tickets:", error.message);
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
