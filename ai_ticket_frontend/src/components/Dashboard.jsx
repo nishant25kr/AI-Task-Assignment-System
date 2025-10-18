@@ -76,7 +76,7 @@ export default function Dashboard() {
   );
 
   return (
-    <div className="h-ma p-5">
+    <div className="p-5">
       <div className="max-w-7xl mx-auto px-6 pb-12">
         {/* Stats Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">

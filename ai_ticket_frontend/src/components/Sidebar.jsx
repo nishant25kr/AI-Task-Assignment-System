@@ -59,7 +59,7 @@ export default function Sidebar() {
       {/* Sidebar */}
       <div
         className={`
-          fixed lg:sticky top-0  z-40
+          fixed lg:sticky top-0  z-40 h-screen
           w-64 bg-gray-800/50 backdrop-blur-sm border-r border-gray-700/50 text-white flex flex-col
           transition-transform duration-300 ease-in-out
           ${isMobileMenuOpen ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'}

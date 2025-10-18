@@ -8,7 +8,6 @@ import Signup from './pages/signup'
 import Admin from './pages/admin'
 import Tickets from './pages/tickets'
 import Home from './pages/Home'
-import Navbar from './components/Navbar/Navbar'
 import Dashboard from './components/Dashboard'
 import AllTickets from './pages/AllTickets'
 import Employees from './components/Employees'
@@ -18,7 +17,6 @@ function App() {
 
   return (
     <BrowserRouter>
-      <Navbar />
       <main >
         <Routes>
           <Route

@@ -91,75 +91,75 @@ const login = async (req, res) => {
 };
 
 const logout = async (req, res) => {
-    try {
-        const token = req.headers.authorization(" ")[1]
-        if (!token) {
-            return res.status(401).json({ error: "Unauthorized" })
-        }
-        jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-            if (err) {
-                return res.status(401).json("unauthorized :", err)
-            }
-            res.json({ message: "User logout successfully " })
-        })
-    } catch (error) {
-        res.status(500).json(
-            {
-                error: "logout failed",
-                details: error.message
-            }
-
-        )
+  try {
+    const token = req.headers.authorization(" ")[1]
+    if (!token) {
+      return res.status(401).json({ error: "Unauthorized" })
     }
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+      if (err) {
+        return res.status(401).json("unauthorized :", err)
+      }
+      res.json({ message: "User logout successfully " })
+    })
+  } catch (error) {
+    res.status(500).json(
+      {
+        error: "logout failed",
+        details: error.message
+      }
+
+    )
+  }
 }
 
 const update = async (req, res) => {
 
-    const { skills = [], role, email } = req.body;
+  const { skills = [], role, email } = req.body;
 
-    try {
-        if (req.user?.role != 'admin') {
-            return res.status(403).json({ error: "Forbidden" })
-        }
-
-        const useravailabe = await User.findOne({ email })
-        if (!useravailabe) {
-            return res.status(401).json({ error: "User not found" })
-        }
-
-        await User.updateOne({ email }, { skills: skills.length ? skills : useravailabe.skills, role })
-
-        return res.json({ message: "User updated successfully" });
-
-
-    } catch (error) {
-        res.status(500).json(
-            {
-                message: "Error while updating data", details: error.message
-            }
-        )
+  try {
+    if (req.user?.role != 'admin') {
+      return res.status(403).json({ error: "Forbidden" })
     }
+
+    const useravailabe = await User.findOne({ email })
+    if (!useravailabe) {
+      return res.status(401).json({ error: "User not found" })
+    }
+
+    await User.updateOne({ email }, { skills: skills.length ? skills : useravailabe.skills, role })
+
+    return res.json({ message: "User updated successfully" });
+
+
+  } catch (error) {
+    res.status(500).json(
+      {
+        message: "Error while updating data", details: error.message
+      }
+    )
+  }
 
 }
 
 const getUser = async (req, res) => {
   console.log(req.user)
-    try {
-        if (req.user.role !== "admin") {
-            return res.status(403).json({ error: "Forbidden" })
-        }
-        const user = await User.find().select("-password")
-
-        return res.json(user)
-    } catch (error) {
-      console.log(error)
+  try {
+    if (req.user.role !== "admin") {
+      return res.status(403).json({ error: "Forbidden" })
     }
+    const user = await User.find().select("-password")
+
+    return res.json(user)
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 export {
-    signup,
-    login,
-    logout,
-    update,
-    getUser
+  signup,
+  login,
+  logout,
+  update,
+  getUser
 };

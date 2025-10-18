@@ -38,7 +38,7 @@ export default function Login() {
   };
 
   return (
-    <div className=" bg-gray-900 relative overflow-hidden">
+    <div className="bg-gray-900  relative overflow-hidden">
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-20 left-20 w-72 h-72 bg-purple-500/20 rounded-full blur-3xl animate-pulse"></div>
