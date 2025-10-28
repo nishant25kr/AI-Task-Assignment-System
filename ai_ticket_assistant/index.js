@@ -29,8 +29,11 @@ app.use('/api/ticket', ticketRoute)
 
 app.use("/api/inngest", serve({
     client: inngest,
-    functions: [onUserSignup, onTicketCreated]
+    functions: [onUserSignup]
 }))
+
+// app.use("/api/inngest", serve({ client: inngest, functions }));
+
 
 mongoose.connect(process.env.MONGO_URI)
     .then(() => {

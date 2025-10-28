@@ -23,6 +23,13 @@ const signup = async (req, res) => {
       name: "user/signup",
       data: { email },
     });
+    
+    if (!ingg) {
+      res.status(200).json({
+        error: "signup failed",
+        details: "error in Inngest event",
+      });
+    }
     console.log("✅ Event sent:", ingg);
 
     // sign JWT

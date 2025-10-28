@@ -9,12 +9,12 @@ export const onTicketCreated = inngest.createFunction(
   { id: "on-ticket-created", retries: 2 },
   { event: "ticket/created" },
   async ({ event, step }) => {
-  console.log("hi in ticket")
+    console.log("hi in ticket")
 
     try {
       const { ticketId } = event.data;
 
-      console.log("id:",ticketId)
+      console.log("id:", ticketId)
 
       //fetch ticket from DB
       const ticket = await step.run("fetch-ticket", async () => {
