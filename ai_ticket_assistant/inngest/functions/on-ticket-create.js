@@ -9,17 +9,14 @@ export const onTicketCreated = inngest.createFunction(
   { id: "on-ticket-created", retries: 2 },
   { event: "ticket/created" },
   async ({ event, step }) => {
-    console.log("hi in ticket")
 
     try {
       const { ticketId } = event.data;
 
-      console.log("id:", ticketId)
-
       //fetch ticket from DB
       const ticket = await step.run("fetch-ticket", async () => {
         const ticketObject = await Ticket.findById(ticketId);
-        if (!ticket) {
+        if (!ticketObject) {
           throw new NonRetriableError("Ticket not found");
         }
         return ticketObject;
@@ -30,7 +27,6 @@ export const onTicketCreated = inngest.createFunction(
       });
 
       const aiResponse = await analyzeTicket(ticket);
-      console.log(aiResponse)
 
       const relatedskills = await step.run("ai-processing", async () => {
         let skills = [];
@@ -49,27 +45,37 @@ export const onTicketCreated = inngest.createFunction(
       });
 
       const moderator = await step.run("assign-moderator", async () => {
+        if (!relatedskills || relatedskills.length === 0) {
+          return null;
+        }
+
+        const regexPattern = relatedskills
+          .map(s => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")) // escape regex chars
+          .join("|");
+
         let user = await User.findOne({
-          role: "moderator",
+          role: "employee",
           skills: {
             $elemMatch: {
-              $regex: relatedskills.join("|"),
+              $regex: regexPattern,
               $options: "i",
             },
           },
-        });
+        })
+        .select("-password");
+
         if (!user) {
-          user = await User.findOne({
-            role: "admin",
-          });
+          return null;
         }
+
         await Ticket.findByIdAndUpdate(ticket._id, {
-          assignedTo: user?._id || null,
+          assignedTo: user._id,
         });
+
         return user;
       });
 
-      await setp.run("send-email-notification", async () => {
+      await step.run("send-email-notification", async () => {
         if (moderator) {
           const finalTicket = await Ticket.findById(ticket._id);
           await sendMail(
@@ -82,7 +88,6 @@ export const onTicketCreated = inngest.createFunction(
 
       return { success: true };
     } catch (err) {
-      console.error("❌ Error running the step", err.message);
       return { success: false };
     }
   }

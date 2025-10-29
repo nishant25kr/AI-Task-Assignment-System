@@ -56,12 +56,12 @@ export const getTickets = async (req, res) => {
       tickets = await Ticket.find({})
         .populate("assignedTo", ["email", "_id"])
         .sort({ createdAt: -1 })
-        .lean(); // ✅ makes it plain JSON-safe
+        .lean(); 
     } else {
       tickets = await Ticket.find({ createdBy: user._id })
         .select("title description status createdAt")
         .sort({ createdAt: -1 })
-        .lean(); // ✅ optional but recommended
+        .lean(); 
     }
 
     return res.status(200).json(tickets);

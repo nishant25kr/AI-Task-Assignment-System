@@ -1,11 +1,12 @@
 import { serve } from "inngest/express";
 import { inngest } from "./inngest/client.js";
 import { onUserSignup } from "./inngest/functions/on-signup.js";
+import { onTicketCreated } from "./inngest/functions/on-ticket-create.js";
 
 export default serve(
   {
     client: inngest,
-    functions: [onUserSignup]
+    functions: [onUserSignup,onTicketCreated]
   }
 );
 

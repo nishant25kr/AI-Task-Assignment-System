@@ -29,7 +29,7 @@ app.use('/api/ticket', ticketRoute)
 
 app.use("/api/inngest", serve({
     client: inngest,
-    functions: [onUserSignup]
+    functions: [onUserSignup,onTicketCreated]
 }))
 
 // app.use("/api/inngest", serve({ client: inngest, functions }));

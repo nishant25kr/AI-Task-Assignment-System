@@ -15,7 +15,7 @@ const signup = async (req, res) => {
       email,
       password: hashedPassword,
       skills,
-      role: "admin"
+      role: "employee"
     });
 
     // fire Inngest event
@@ -54,7 +54,6 @@ const signup = async (req, res) => {
 
 const login = async (req, res) => {
   const { email, password } = req.body;
-  console.log("📩 Incoming login request:", email, password);
 
   try {
     // check user
