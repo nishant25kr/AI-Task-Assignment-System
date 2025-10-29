@@ -22,9 +22,7 @@ export default function Sidebar() {
   const menuItems = [
     { name: "Dashboard", icon: <LayoutDashboard size={20} />, path: "/admin/dashboard" },
     { name: "Create Task", icon: <ClipboardList size={20} />, path: "/admin/tasks" },
-    { name: "AI Distribution", icon: <Cpu size={20} />, path: "/admin/ai-distribution" },
     { name: "Employees", icon: <Users size={20} />, path: "/admin/employees" },
-    { name: "Analytics", icon: <BarChart3 size={20} />, path: "/admin/analytics" },
     { name: "Settings", icon: <Settings size={20} />, path: "/admin/settings" },
   ];
 
@@ -72,7 +70,7 @@ export default function Sidebar() {
               <Sparkles className="w-6 h-6 text-white" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+              <h1 className="text-2xl  font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
                 TaskAI
               </h1>
               <p className="text-xs text-gray-400">AI-Powered System</p>

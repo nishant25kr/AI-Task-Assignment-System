@@ -36,7 +36,7 @@ export default function Admin() {
         {/* Top Header Bar */}
         <header className="  w-full">
           <div className="px-8 py-4">
-            <div className="flex items-center justify-between">
+            <div className="flex ml-15 items-center justify-between">
               {/* Welcome Message */}
               <div>
                 <h1 className="text-2xl font-bold text-white">

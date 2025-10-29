@@ -50,18 +50,17 @@ export const createTicket = async (req, res) => {
 export const getTickets = async (req, res) => {
   try {
     const user = req.user;
+    console.log(user)
     let tickets = [];
 
-    if (user.role !== "user") {
+    if (user.role == "admin") {
       tickets = await Ticket.find({})
         .populate("assignedTo", ["email", "_id"])
         .sort({ createdAt: -1 })
-        .lean(); 
+        .lean();
+
     } else {
-      tickets = await Ticket.find({ createdBy: user._id })
-        .select("title description status createdAt")
-        .sort({ createdAt: -1 })
-        .lean(); 
+      return res.status(401).json({ message: "unauthorizes user" })
     }
 
     return res.status(200).json(tickets);
