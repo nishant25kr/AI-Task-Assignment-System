@@ -96,3 +96,14 @@ export const getTicket = async (req, res) => {
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
+export const getTicketOfUser = async( req,res) => {
+  try {
+    const {id} = req.params
+  
+  } catch (error) {
+    
+  }
+
+
+}

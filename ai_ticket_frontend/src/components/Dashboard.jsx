@@ -236,7 +236,7 @@ const TaskCard = ({ ticket }) => {
   const defaultBadgeStyle = 'bg-gray-500/10 text-gray-400 border-gray-500/20';
 
   return (
-    <Link to={`/tickets/${ticket._id}`} className="block group">
+    <Link to={`/tickets/${ticket._id}`} className="block group m-3">
       <div className="bg-gradient-to-br from-slate-800/60 to-slate-700/60 border border-slate-600/40 rounded-2xl p-6 hover:border-purple-500/50 hover:shadow-xl hover:shadow-purple-500/10 transition-all duration-300 transform hover:scale-[1.02]">
         <div className="flex items-start justify-between mb-3">
           <h3 className="text-lg sm:text-xl font-bold text-white group-hover:text-purple-300 transition-colors line-clamp-1">{ticket.title}</h3>

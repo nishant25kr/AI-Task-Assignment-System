@@ -137,6 +137,7 @@ function Employees() {
                   </div>
 
                   {/* Skills */}
+                  Total assigned tasks:{}
                   {user.skills && user.skills.length > 0 && (
                     <div className="mb-4">
                       <p className="text-sm font-medium text-gray-400 mb-2">Skills:</p>
