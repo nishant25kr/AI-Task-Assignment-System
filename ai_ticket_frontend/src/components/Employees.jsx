@@ -9,8 +9,10 @@ import {
   TrendingUp,
   Award
 } from 'lucide-react';
+import axios from "axios"
 
 function Employees() {
+  const URL = import.meta.env.VITE_BACKEND_URL 
   const token = localStorage.getItem("token");
   const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
@@ -32,6 +34,12 @@ function Employees() {
 
     fetchData();
   }, [token]);
+
+  async function fetchTicket(id){
+    console.log(id)
+    const response = await axios.get(`${URL}/api/auth/getAlltickets/${id}`)
+    console.log(response)
+  }
 
   const filteredUsers = users.filter(user =>
     user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -137,7 +145,7 @@ function Employees() {
                   </div>
 
                   {/* Skills */}
-                  Total assigned tasks:{}
+                  Total assigned tasks:{fetchTicket(user._id)}
                   {user.skills && user.skills.length > 0 && (
                     <div className="mb-4">
                       <p className="text-sm font-medium text-gray-400 mb-2">Skills:</p>

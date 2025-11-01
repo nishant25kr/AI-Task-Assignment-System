@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import User from "../model/user.model.js";
 import jwt from "jsonwebtoken";
 import { inngest } from "../inngest/client.js";
+import Ticket from "../model/ticket.model.js";
 
 const signup = async (req, res) => {
   const { email, password, skills = [] } = req.body;
@@ -23,7 +24,7 @@ const signup = async (req, res) => {
       name: "user/signup",
       data: { email },
     });
-    
+
     if (!ingg) {
       res.status(200).json({
         error: "signup failed",
@@ -162,10 +163,38 @@ const getUser = async (req, res) => {
   }
 }
 
+const getTotalTickets = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    if (!id) {
+      return res.status(400).json({ error: "User ID is required" });
+    }
+
+    const tickets = await Ticket.find({ assignedTo: id });
+
+    if (!tickets.length) {
+      return res.status(404).json({ error: "No tickets assigned to this user" });
+    }
+
+    return res.status(200).json({
+      message: "Tickets fetched successfully",
+      totalTickets: tickets.length,
+      tickets,
+    });
+
+  } catch (error) {
+    console.error("Error fetching tickets:", error);
+    return res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
+
 export {
   signup,
   login,
   logout,
   update,
-  getUser
+  getUser,
+  getTotalTickets
 };

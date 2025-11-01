@@ -97,13 +97,3 @@ export const getTicket = async (req, res) => {
   }
 };
 
-export const getTicketOfUser = async( req,res) => {
-  try {
-    const {id} = req.params
-  
-  } catch (error) {
-    
-  }
-
-
-}
