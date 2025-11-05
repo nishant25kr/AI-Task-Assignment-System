@@ -28,7 +28,6 @@ export default function Sidebar() {
 
   const handleLogout = () => {
     localStorage.clear();
-    navigate("/");
   };
 
   const closeMobileMenu = () => {

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { 
-  Users, 
-  Mail, 
-  Briefcase, 
+import {
+  Users,
+  Mail,
+  Briefcase,
   Calendar,
   Search,
   UserCheck,
@@ -10,12 +10,14 @@ import {
   Award
 } from 'lucide-react';
 import axios from "axios"
+import { Navigate, useNavigate } from 'react-router-dom';
 
 function Employees() {
-  const URL = import.meta.env.VITE_BACKEND_URL 
+  const URL = import.meta.env.VITE_BACKEND_URL
   const token = localStorage.getItem("token");
   const [users, setUsers] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const navigate = useNavigate()
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,7 +37,7 @@ function Employees() {
     fetchData();
   }, [token]);
 
-  async function fetchTicket(id){
+  async function fetchTicket(id) {
     console.log(id)
     const response = await axios.get(`${URL}/api/auth/getAlltickets/${id}`)
     console.log(response)
@@ -44,10 +46,16 @@ function Employees() {
   const filteredUsers = users.filter(user =>
     user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
     user.role.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    (user.skills && user.skills.some(skill => 
+    (user.skills && user.skills.some(skill =>
       skill.toLowerCase().includes(searchTerm.toLowerCase())
     ))
   );
+
+  function detail(id) {
+    console.log(id)
+    navigate(`${id}`);
+
+  }
 
   return (
     <div className="p-5">
@@ -120,6 +128,7 @@ function Employees() {
                 <div
                   key={user._id}
                   className="bg-gradient-to-br from-slate-800/60 to-slate-700/60 border border-slate-600/40 rounded-2xl p-6 hover:border-purple-500/50 hover:shadow-xl hover:shadow-purple-500/10 transition-all duration-300 transform hover:scale-[1.02] group"
+                  onClick={() => { detail(user._id) }}
                 >
                   {/* User Avatar */}
                   <div className="flex items-center justify-center mb-4">
@@ -145,7 +154,8 @@ function Employees() {
                   </div>
 
                   {/* Skills */}
-                  Total assigned tasks:{fetchTicket(user._id)}
+                  {/* Total assigned tasks:{fetchTicket(user._id)} */}
+
                   {user.skills && user.skills.length > 0 && (
                     <div className="mb-4">
                       <p className="text-sm font-medium text-gray-400 mb-2">Skills:</p>

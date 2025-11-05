@@ -171,6 +171,7 @@ const getTotalTickets = async (req, res) => {
       return res.status(400).json({ error: "User ID is required" });
     }
 
+    const employeeDetail = await User.findById(id).select("-password")
     const tickets = await Ticket.find({ assignedTo: id });
 
     if (!tickets.length) {
@@ -181,6 +182,7 @@ const getTotalTickets = async (req, res) => {
       message: "Tickets fetched successfully",
       totalTickets: tickets.length,
       tickets,
+      employeeDetail
     });
 
   } catch (error) {
