@@ -20,10 +20,10 @@ export default function Sidebar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const menuItems = [
-    { name: "Dashboard", icon: <LayoutDashboard size={20} />, path: "/admin/dashboard" },
-    { name: "Create Task", icon: <ClipboardList size={20} />, path: "/admin/tasks" },
-    { name: "Employees", icon: <Users size={20} />, path: "/admin/employees" },
-    { name: "Settings", icon: <Settings size={20} />, path: "/admin/settings" },
+    { name: "Dashboard", icon: <LayoutDashboard size={20} />, path: "dashboard" },
+    { name: "Create Employee", icon: <ClipboardList size={20} />, path: "create-employee" },
+    { name: "Employees", icon: <Users size={20} />, path: "employees" },
+    { name: "Settings", icon: <Settings size={20} />, path: "settings" },
   ];
 
   const handleLogout = () => {

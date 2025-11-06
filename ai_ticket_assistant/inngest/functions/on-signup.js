@@ -7,11 +7,11 @@ export const onUserSignup = inngest.createFunction(
   { id: "on-user-signup", retries: 2 },
   { event: "user/signup" },
   async ({ event, step }) => {
-    console.log("👋 Inngest function triggered for signup");
+
 
     try {
       const { email } = event.data;
-      console.log(email)
+
 
       // Step 1: Get the user from DB
       const userObject = await step.run("get-user-email", async () => {
@@ -33,7 +33,7 @@ export const onUserSignup = inngest.createFunction(
 
       return { success: true };
     } catch (error) {
-      console.error("❌ Error running signup workflow:", error.message);
+
       return { success: false, error: error.message };
     }
   }

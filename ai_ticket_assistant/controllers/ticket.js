@@ -42,7 +42,7 @@ export const createTicket = async (req, res) => {
     });
 
   } catch (error) {
-    console.error("Error creating ticket:", error.message);
+
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
@@ -50,7 +50,7 @@ export const createTicket = async (req, res) => {
 export const getTickets = async (req, res) => {
   try {
     const user = req.user;
-    console.log(user)
+
     let tickets = [];
 
     if (user.role == "admin") {
@@ -65,7 +65,7 @@ export const getTickets = async (req, res) => {
 
     return res.status(200).json(tickets);
   } catch (error) {
-    console.error("Error fetching tickets:", error.message);
+
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };
@@ -92,7 +92,7 @@ export const getTicket = async (req, res) => {
     }
     return res.status(404).json({ ticket });
   } catch (error) {
-    console.error("Error fetching ticket", error.message);
+
     return res.status(500).json({ message: "Internal Server Error" });
   }
 };

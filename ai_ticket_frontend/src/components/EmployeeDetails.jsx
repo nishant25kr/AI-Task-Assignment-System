@@ -13,7 +13,7 @@ import {
 } from 'lucide-react';
 
 // Constants for configuration
-const API_BASE_URL = "http://localhost:3000/api";
+const API_BASE_URL = "http://localhost:3000/";
 
 const statusStyles = {
   IN_PROGRESS: {
@@ -53,7 +53,7 @@ const useFetchEmployee = (id) => {
       setLoading(true);
       setError(null);
       try {
-        const response = await axios.get(`${API_BASE_URL}/auth/getAlltickets/${id}`);
+        const response = await axios.get(`${API_BASE_URL}api/auth/getAlltickets/${id}`);
         const { employeeDetail, tickets } = response.data;
         setEmployee(employeeDetail);
         setTickets(tickets);
@@ -92,7 +92,7 @@ const EmployeeInfoCard = ({ employee }) => (
         </div>
       </div>
     </div>
-    
+
     <div className="grid md:grid-cols-2 gap-6">
       <div className="bg-gradient-to-br from-slate-800/60 to-slate-700/60 border border-slate-600/40 rounded-2xl p-5">
         <div className="flex items-center gap-2 mb-2">
@@ -101,7 +101,7 @@ const EmployeeInfoCard = ({ employee }) => (
         </div>
         <p className="text-white font-medium">{employee.email}</p>
       </div>
-      
+
       <div className="bg-gradient-to-br from-slate-800/60 to-slate-700/60 border border-slate-600/40 rounded-2xl p-5">
         <div className="flex items-center gap-2 mb-2">
           <Briefcase className="w-4 h-4 text-purple-400" />
@@ -109,7 +109,7 @@ const EmployeeInfoCard = ({ employee }) => (
         </div>
         <p className="text-purple-400 font-semibold">{employee.role}</p>
       </div>
-      
+
       <div className="bg-gradient-to-br from-slate-800/60 to-slate-700/60 border border-slate-600/40 rounded-2xl p-5 md:col-span-2">
         <div className="flex items-center gap-2 mb-3">
           <Award className="w-4 h-4 text-purple-400" />
@@ -117,8 +117,8 @@ const EmployeeInfoCard = ({ employee }) => (
         </div>
         <div className="flex flex-wrap gap-2">
           {employee.skills.map((skill, index) => (
-            <span 
-              key={index} 
+            <span
+              key={index}
               className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/30 text-purple-300 text-sm px-3 py-1.5 rounded-full hover:from-purple-500/30 hover:to-pink-500/30 transition-all"
             >
               {skill}
@@ -154,11 +154,11 @@ const TicketItem = ({ ticket }) => {
           </span>
         </div>
       </div>
-      
+
       <p className="text-sm text-gray-400 leading-relaxed mb-4">
         {ticket.description}
       </p>
-      
+
       <div className="flex items-center gap-2 text-xs text-gray-500 pt-4 border-t border-slate-600/30">
         <Ticket className="w-4 h-4" />
         <span>ID: {ticket._id.slice(-8)}</span>
@@ -258,7 +258,7 @@ function EmployeeDetails() {
 
         {/* Employee Info Card */}
         <EmployeeInfoCard employee={employee} />
-        
+
         {/* Tickets Section */}
         <div className="bg-gradient-to-br from-slate-900/90 to-slate-800/90 backdrop-blur-xl border border-slate-700/50 rounded-3xl p-8 shadow-2xl">
           <div className="flex items-center justify-between mb-6">
@@ -271,7 +271,7 @@ function EmployeeDetails() {
                 <p className="text-sm text-gray-400">{tickets.length} {tickets.length === 1 ? 'ticket' : 'tickets'} in total</p>
               </div>
             </div>
-            
+
             <div className="hidden sm:flex items-center gap-3 text-sm">
               {Object.entries(statusStyles).map(([status, style]) => {
                 const Icon = style.icon;
@@ -284,7 +284,7 @@ function EmployeeDetails() {
               })}
             </div>
           </div>
-          
+
           {tickets.length > 0 ? (
             <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
               {tickets.map((ticket) => (

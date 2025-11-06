@@ -27,7 +27,6 @@ function Employees() {
           method: "GET",
         });
         const data = await res.json();
-        console.log(data);
         setUsers(data);
       } catch (err) {
         console.error(err);

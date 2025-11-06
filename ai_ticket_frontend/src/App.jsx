@@ -12,6 +12,7 @@ import Dashboard from './components/Dashboard'
 import AllTickets from './pages/AllTickets'
 import Employees from './components/Employees'
 import EmployeeDetails from './components/EmployeeDetails'
+import CreateEmployee from './components/CreateEmployee'
 
 
 function App() {
@@ -58,6 +59,7 @@ function App() {
             } >
             <Route path='dashboard' element={<Dashboard />} />
             <Route path='tickets' element={<AllTickets />} />
+            <Route path='create-employee' element={<CreateEmployee />} />
             <Route path='employees' element={<Employees />} />
             <Route path='employees/:id' element={<EmployeeDetails />} />
 
