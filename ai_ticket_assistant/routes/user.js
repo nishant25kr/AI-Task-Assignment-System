@@ -14,9 +14,9 @@ const router = express.Router()
 
 
 router.post('/update-user', authentication, update)
-router.post('/create-employee', createEmployee)
+router.post('/create-employee',authentication, createEmployee)
 router.get('/user', authentication, getUser)
-router.get("/getAlltickets/:id", getTotalTickets)
+router.get("/getAlltickets/:id",authentication, getTotalTickets)
 
 router.post("/signup", signup)
 router.post("/login", login)

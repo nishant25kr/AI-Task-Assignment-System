@@ -118,7 +118,7 @@ function CreateEmployee() {
 
                         {/* Skills Input */}
                         <div>
-                            <label className="block text-sm font-medium text-gray-300 mb-2 flex items-center gap-2">
+                            <label className=" text-sm font-medium text-gray-300 mb-2 flex items-center gap-2">
                                 <Award className="w-4 h-4 text-purple-400" />
                                 Skills
                             </label>
