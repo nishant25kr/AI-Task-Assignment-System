@@ -50,146 +50,190 @@ function CreateEmployee() {
     };
 
     return (
-        <div className="p-5">
-            <div className="max-w-7xl mx-auto px-6 pb-12">
-                <div className="bg-gradient-to-br from-slate-900/90 to-slate-800/90 backdrop-blur-xl border border-slate-700/50 rounded-3xl p-8 shadow-2xl">
-                    <div className="flex items-center gap-3 mb-6">
-                        <div className="p-2 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg">
-                            <UserPlus className="w-6 h-6 text-white" />
-                        </div>
-                        <div>
-                            <h1 className="text-3xl font-bold text-white">Create New Employee</h1>
-                            <p className="text-sm text-gray-400">Add a new team member to your organization</p>
+        <div className="min-h-screen p-3 sm:p-5">
+            <div className="max-w-7xl mx-auto px-2 sm:px-6 pb-8 sm:pb-12">
+                {/* Stats Cards - Mobile Responsive */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
+                    <div className="bg-gradient-to-br from-blue-900/40 to-blue-800/40 backdrop-blur-xl border border-blue-500/20 rounded-2xl p-5 sm:p-6 shadow-xl">
+                        <div className="flex items-center justify-between">
+                            <div>
+                                <p className="text-blue-300 text-xs sm:text-sm font-medium mb-1">New Employee</p>
+                                <p className="text-2xl sm:text-2xl font-bold text-white">Onboarding</p>
+                            </div>
+                            <div className="p-3 sm:p-4 bg-blue-500/20 rounded-xl">
+                                <UserPlus className="w-6 h-6 sm:w-8 sm:h-8 text-blue-400" />
+                            </div>
                         </div>
                     </div>
 
-                    <div className="bg-gradient-to-br from-slate-800/60 to-slate-700/60 border border-slate-600/40 rounded-2xl p-6 mb-8">
-                        <h3 className="text-lg font-semibold text-white mb-3 flex items-center gap-2">
-                            <Award className="w-5 h-5 text-purple-400" />
-                            Instructions for Admin
+                    <div className="bg-gradient-to-br from-emerald-900/40 to-emerald-800/40 backdrop-blur-xl border border-emerald-500/20 rounded-2xl p-5 sm:p-6 shadow-xl">
+                        <div className="flex items-center justify-between">
+                            <div>
+                                <p className="text-emerald-300 text-xs sm:text-sm font-medium mb-1">Quick Setup</p>
+                                <p className="text-2xl sm:text-2xl font-bold text-white">3 Steps</p>
+                            </div>
+                            <div className="p-3 sm:p-4 bg-emerald-500/20 rounded-xl">
+                                <CheckCircle className="w-6 h-6 sm:w-8 sm:h-8 text-emerald-400" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="bg-gradient-to-br from-purple-900/40 to-purple-800/40 backdrop-blur-xl border border-purple-500/20 rounded-2xl p-5 sm:p-6 shadow-xl sm:col-span-2 lg:col-span-1">
+                        <div className="flex items-center justify-between">
+                            <div>
+                                <p className="text-purple-300 text-xs sm:text-sm font-medium mb-1">Admin Access</p>
+                                <p className="text-2xl sm:text-2xl font-bold text-white">Required</p>
+                            </div>
+                            <div className="p-3 sm:p-4 bg-purple-500/20 rounded-xl">
+                                <Award className="w-6 h-6 sm:w-8 sm:h-8 text-purple-400" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {/* Main Form Container */}
+                <div className="bg-gradient-to-br from-slate-900/90 to-slate-800/90 backdrop-blur-xl border border-slate-700/50 rounded-2xl sm:rounded-3xl p-5 sm:p-8 shadow-2xl">
+                    {/* Header - Mobile Responsive */}
+                    <div className="flex items-start sm:items-center gap-3 mb-6">
+                        <div className="p-2 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg flex-shrink-0">
+                            <UserPlus className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
+                        </div>
+                        <div>
+                            <h1 className="text-2xl sm:text-3xl font-bold text-white">Create New Employee</h1>
+                            <p className="text-xs sm:text-sm text-gray-400 mt-0.5">Add a new team member to your organization</p>
+                        </div>
+                    </div>
+
+                    {/* Instructions Card - Mobile Optimized */}
+                    <div className="bg-gradient-to-br from-slate-800/60 to-slate-700/60 border border-slate-600/40 rounded-2xl p-5 sm:p-6 mb-6 sm:mb-8">
+                        <h3 className="text-base sm:text-lg font-semibold text-white mb-3 flex items-center gap-2">
+                            <Award className="w-4 h-4 sm:w-5 sm:h-5 text-purple-400 flex-shrink-0" />
+                            <span>Instructions for Admin</span>
                         </h3>
-                        <ul className="space-y-2 text-gray-300 text-sm">
+                        <ul className="space-y-2.5 sm:space-y-2 text-gray-300 text-sm sm:text-sm">
                             <li className="flex items-start gap-2">
-                                <span className="text-purple-400 mt-1">•</span>
+                                <span className="text-purple-400 mt-1 flex-shrink-0">•</span>
                                 <span>Enter a valid <span className="text-white font-medium">Name</span> (e.g., John Doe)</span>
                             </li>
                             <li className="flex items-start gap-2">
-                                <span className="text-purple-400 mt-1">•</span>
+                                <span className="text-purple-400 mt-1 flex-shrink-0">•</span>
                                 <span>Enter a unique <span className="text-white font-medium">Email</span> address</span>
                             </li>
                             <li className="flex items-start gap-2">
-                                <span className="text-purple-400 mt-1">•</span>
-                                <span>List <span className="text-white font-medium">Skills</span> separated by commas (e.g., <code className="bg-slate-900/50 px-2 py-0.5 rounded text-purple-300">React, Node.js, Django</code>)</span>
+                                <span className="text-purple-400 mt-1 flex-shrink-0">•</span>
+                                <span className="leading-relaxed">List <span className="text-white font-medium">Skills</span> separated by commas (e.g., <code className="bg-slate-900/50 px-2 py-0.5 rounded text-purple-300 text-xs sm:text-sm">React, Node.js, Django</code>)</span>
                             </li>
                         </ul>
                     </div>
 
-                    {/* Form Fields */}
-                    <div className="space-y-6 mb-6">
+                    {/* Form Fields - Mobile First Design */}
+                    <div className="space-y-5 sm:space-y-6 mb-6">
                         {/* Name Input */}
                         <div>
                             <label className=" text-sm font-medium text-gray-300 mb-2 flex items-center gap-2">
-                                <User className="w-4 h-4 text-purple-400" />
-                                Employee Name
+                                <User className="w-4 h-4 text-purple-400 flex-shrink-0" />
+                                <span>Employee Name</span>
                             </label>
                             <input
                                 type="text"
                                 placeholder="Enter full name"
                                 value={name}
                                 onChange={(e) => setName(e.target.value)}
-                                className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600/50 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                                className="w-full px-4 py-3.5 sm:py-3 bg-slate-800/50 border border-slate-600/50 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all text-base"
                             />
                         </div>
 
                         {/* Email Input */}
                         <div>
                             <label className=" text-sm font-medium text-gray-300 mb-2 flex items-center gap-2">
-                                <Mail className="w-4 h-4 text-purple-400" />
-                                Employee Email
+                                <Mail className="w-4 h-4 text-purple-400 flex-shrink-0" />
+                                <span>Employee Email</span>
                             </label>
                             <input
                                 type="email"
                                 placeholder="employee@company.com"
                                 value={email}
                                 onChange={(e) => setEmail(e.target.value)}
-                                className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600/50 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                                className="w-full px-4 py-3.5 sm:py-3 bg-slate-800/50 border border-slate-600/50 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all text-base"
                             />
                         </div>
 
                         {/* Skills Input */}
                         <div>
                             <label className=" text-sm font-medium text-gray-300 mb-2 flex items-center gap-2">
-                                <Award className="w-4 h-4 text-purple-400" />
-                                Skills
+                                <Award className="w-4 h-4 text-purple-400 flex-shrink-0" />
+                                <span>Skills</span>
                             </label>
                             <input
                                 type="text"
                                 placeholder="React, Node.js, Python, etc."
                                 value={skills}
                                 onChange={(e) => setSkills(e.target.value)}
-                                className="w-full px-4 py-3 bg-slate-800/50 border border-slate-600/50 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all"
+                                className="w-full px-4 py-3.5 sm:py-3 bg-slate-800/50 border border-slate-600/50 rounded-xl text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition-all text-base"
                             />
                             <p className="text-xs text-gray-500 mt-2">Separate multiple skills with commas</p>
                         </div>
                     </div>
 
-                    {/* Submit Button */}
+                    {/* Submit Button - Touch Optimized */}
                     <button
                         onClick={handleCreateEmployee}
                         disabled={loading || !name || !email || !skills}
-                        className={`w-full py-4 rounded-xl font-semibold text-white transition-all duration-300 flex items-center justify-center gap-2 ${loading || !name || !email || !skills
-                            ? "bg-slate-700/50 cursor-not-allowed"
-                            : "bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 shadow-lg hover:shadow-purple-500/50 transform hover:scale-[1.02]"
-                            }`}
+                        className={`w-full py-4 sm:py-4 rounded-xl font-semibold text-white text-base transition-all duration-300 flex items-center justify-center gap-2 ${
+                            loading || !name || !email || !skills
+                                ? "bg-slate-700/50 cursor-not-allowed"
+                                : "bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 shadow-lg hover:shadow-purple-500/50 active:scale-95 sm:hover:scale-[1.02]"
+                        }`}
                     >
                         {loading ? (
                             <>
-                                <Loader className="w-5 h-5 animate-spin" />
-                                Creating Employee...
+                                <Loader className="w-5 h-5 animate-spin flex-shrink-0" />
+                                <span>Creating Employee...</span>
                             </>
                         ) : (
                             <>
-                                <UserPlus className="w-5 h-5" />
-                                Create Employee
+                                <UserPlus className="w-5 h-5 flex-shrink-0" />
+                                <span>Create Employee</span>
                             </>
                         )}
                     </button>
 
-                    {/* Message Display */}
+                    {/* Message Display - Mobile Responsive */}
                     {message && (
                         <div
-                            className={`mt-6 p-4 rounded-xl border flex items-center gap-3 ${messageType === "success"
-                                ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-400"
-                                : "bg-rose-500/10 border-rose-500/30 text-rose-400"
-                                }`}
+                            className={`mt-6 p-4 rounded-xl border flex items-start sm:items-center gap-3 ${
+                                messageType === "success"
+                                    ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-400"
+                                    : "bg-rose-500/10 border-rose-500/30 text-rose-400"
+                            }`}
                         >
                             {messageType === "success" ? (
-                                <CheckCircle className="w-5 h-5 flex-shrink-0" />
+                                <CheckCircle className="w-5 h-5 flex-shrink-0 mt-0.5 sm:mt-0" />
                             ) : (
-                                <XCircle className="w-5 h-5 flex-shrink-0" />
+                                <XCircle className="w-5 h-5 flex-shrink-0 mt-0.5 sm:mt-0" />
                             )}
-                            <span className="font-medium">{message}</span>
+                            <span className="font-medium text-sm sm:text-base">{message}</span>
                         </div>
                     )}
                 </div>
             </div>
 
             <style jsx>{`
-        .custom-scrollbar::-webkit-scrollbar {
-          width: 8px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-          background: rgba(30, 41, 59, 0.3);
-          border-radius: 10px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: rgba(168, 85, 247, 0.4);
-          border-radius: 10px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: rgba(168, 85, 247, 0.6);
-        }
-      `}</style>
+                .custom-scrollbar::-webkit-scrollbar {
+                    width: 8px;
+                }
+                .custom-scrollbar::-webkit-scrollbar-track {
+                    background: rgba(30, 41, 59, 0.3);
+                    border-radius: 10px;
+                }
+                .custom-scrollbar::-webkit-scrollbar-thumb {
+                    background: rgba(168, 85, 247, 0.4);
+                    border-radius: 10px;
+                }
+                .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+                    background: rgba(168, 85, 247, 0.6);
+                }
+            `}</style>
         </div>
     );
 }

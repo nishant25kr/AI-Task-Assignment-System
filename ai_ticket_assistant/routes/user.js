@@ -1,6 +1,7 @@
 import express from "express"
 import {
     createEmployee,
+    deleteEmployee,
     getTotalTickets,
     getUser,
     login,
@@ -14,10 +15,11 @@ const router = express.Router()
 
 
 router.post('/update-user', authentication, update)
-router.post('/create-employee',authentication, createEmployee)
+router.post('/create-employee', createEmployee)
 router.get('/user', authentication, getUser)
-router.get("/getAlltickets/:id",authentication, getTotalTickets)
+router.delete("/delete-employee/:id",deleteEmployee)
 
+router.get("/getAlltickets/:id", getTotalTickets)
 router.post("/signup", signup)
 router.post("/login", login)
 router.post("/logout", logout)

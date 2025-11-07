@@ -173,11 +173,7 @@ const getTotalTickets = async (req, res) => {
 
     const employeeDetail = await User.findById(id).select("-password")
     const tickets = await Ticket.find({ assignedTo: id });
-
-    if (!tickets.length) {
-      return res.status(404).json({ error: "No tickets assigned to this user" });
-    }
-
+    
     return res.status(200).json({
       message: "Tickets fetched successfully",
       totalTickets: tickets.length,
@@ -225,6 +221,30 @@ const createEmployee = async (req, res) => {
   }
 };
 
+const deleteEmployee = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    console.log("Deleting employee:", id);
+
+    const foundUser = await User.findById(id);
+
+    if (!foundUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    if (foundUser.role === "admin") {
+      return res.status(403).json({ message: "You cannot delete an admin" });
+    }
+
+    await User.findByIdAndDelete(id);
+
+    return res.status(200).json({ message: "Employee deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting employee:", error.message);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
 
 export {
   signup,
@@ -233,5 +253,6 @@ export {
   update,
   getUser,
   getTotalTickets,
-  createEmployee
+  createEmployee,
+  deleteEmployee
 };
